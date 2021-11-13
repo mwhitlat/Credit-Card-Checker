@@ -26,11 +26,11 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 // Add your functions below:
 
 function validateCred(array) {
-  var temp_array = array
+  const temp_array = [].concat(array)
   //Steps 1&2: Remove last digit from array & reverse it
   droppedDigit = temp_array.pop();
   temp_array.reverse();
-  //Step 3: Multiply every other # by 2, if # is >9, subtract 9
+  //Step 3: Multiply all odd indexed #'s by 2, if # is >9, subtract 9
   for (let i = 0; i < temp_array.length ; i++) {
     if (i % 2 === 0) {
       temp_array[i] = temp_array[i] * 2
@@ -48,6 +48,46 @@ function validateCred(array) {
 console.log(validateCred(invalid5))
 
 
+let invalidCards = []
+function findInvalidCards(array) {
+  for (let i= 0; i < array.length; i++) {
+    if(validateCred(array[i])=== false) {
+      invalidCards.push(array[i]);
+    }
+  } return invalidCards
+}
+/*
+function findInvalidCards(card) {
+  let invalidCards = []
+  for(cards of card) {
+    if(!validateCred(card)){
+      invalidCards.push(card);
+    } console.log(invalidCards);
+    return invalidCards
+    
+  }
+}
+*/
+findInvalidCards(batch)
+console.log(invalidCards)
 
+// create array to identify card companies
+let invalidCardCompanies =[]
+function idInvalidCardCompanies(array) {
+  for (let i = 0; i < array.length; i++){
+    if((array[i][0] === 3) && (invalidCardCompanies.indexOf('Amex (American Express)') === -1)) {
+     invalidCardCompanies.push('Amex (American Express)')
+     } 
+     else if((array[i][0] === 4) && invalidCardCompanies.indexOf('Visa') === -1) {
+      invalidCardCompanies.push('Visa')
+    } else if((array[i][0] === 5) && (invalidCardCompanies.indexOf('Mastercard') === -1)){
+     invalidCardCompanies.push('Mastercard')
+    } else if((array[i][0] = 6) && (invalidCardCompanies.indexOf('Discover') === -1)) {
+      invalidCardCompanies.push('Discover')
+    } else console.log('company not found')
+  } return console.log(invalidCardCompanies)
+}
+
+idInvalidCardCompanies(findInvalidCards(batch))
 
 
